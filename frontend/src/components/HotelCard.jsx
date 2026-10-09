@@ -18,7 +18,7 @@ export default function HotelCard({ hotel, onDelete }) {
     e.preventDefault();
     if (!window.confirm(`"${hotel.title}" delete pannava da?`)) return;
     try {
-      await axios.delete(`http://localhost:5000/api/hotels/${hotel.id}`);
+      await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/hotels'}/${hotel.id}`);
       onDelete(hotel.id); // ITHU THAN MUKKIYAM DA - LIST LA IRUNTHU UDANE POYIDUM DA!
     } catch (err) {
       alert('Delete failed da: ' + err.message);

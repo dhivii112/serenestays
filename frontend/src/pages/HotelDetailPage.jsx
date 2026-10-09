@@ -7,7 +7,7 @@ export default function HotelDetailPage() {
   const [hotel, setHotel] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/hotels/${id}`).then(res => {
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/hotels'}/${id}`).then(res => {
       setHotel(res.data);
       document.title = `${res.data.title} | SereneStays`;
     });
@@ -23,7 +23,7 @@ export default function HotelDetailPage() {
       <Link to="/" className="text-sm font-bold mb-4 inline-block">← Back to Hotels</Link>
 
       <img
-        src={hotel.image_path?.startsWith('http')? hotel.image_path : `http://localhost:5000${hotel.image_path}`}
+        src={hotel.image_path?.startsWith('http')? hotel.image_path : `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${hotel.image_path}`}
         alt={hotel.title}
         className="w-full h-[400px] object-cover rounded-2xl"
         onError={e=>e.target.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'}

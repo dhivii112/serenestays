@@ -22,7 +22,8 @@ const HotelForm = ({ initialData, onSubmit, onCancel, isSubmitting }) => {
         price: initialData.price || '',
       });
       if (initialData.image_path) {
-        setPreview(`http://localhost:5000/${initialData.image_path}`);
+        const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+        setPreview(`${backendUrl}/${initialData.image_path}`);
       }
     }
   }, [initialData]);
