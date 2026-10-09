@@ -6,7 +6,7 @@ const path = require('path');
 
 const fs = require('fs');
 
-// Image upload setup da
+
 const uploadDir = path.join(__dirname, '../../uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
@@ -22,14 +22,14 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-// UPLOAD API - image upload pannura route da
+
 router.post('/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No file da' });
   const imageUrl = `/uploads/${req.file.filename}`;
   res.json({ imageUrl });
 });
 
-// GET all
+
 router.get('/', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM hotels ORDER BY id DESC');

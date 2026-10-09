@@ -41,13 +41,13 @@ if (fs.existsSync(frontendPath)) {
     });
   });
 } else {
-  // Fallback for when frontend is deployed separately
+  
   app.get('/', (req, res) => {
     res.send('Backend API is running. Please use the frontend URL to access the application.');
   });
 }
 
-// Render provides the PORT environment variable
+
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, '0.0.0.0', () => {
