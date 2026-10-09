@@ -17,35 +17,35 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // API routes
 app.use('/api/hotels', hotelRoutes);
 
-// Serve React frontend
+// Serve React frontend conditionally
 const frontendPath = path.join(__dirname, '../frontend/dist');
+const fs = require('fs');
 
-app.use(express.static(frontendPath));
+if (fs.existsSync(frontendPath)) {
+  app.use(express.static(frontendPath));
 
-// Health check route
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    message: 'SereneStays server is running'
-  });
-});
-
-// Handle React frontend routes
-app.use((req, res, next) => {
-  if (
-    req.method !== 'GET' ||
-    req.path.startsWith('/api') ||
-    req.path.startsWith('/uploads')
-  ) {
-    return next();
-  }
-
-  res.sendFile(path.join(frontendPath, 'index.html'), (err) => {
-    if (err) {
-      next(err);
+  // Handle React frontend routes
+  app.use((req, res, next) => {
+    if (
+      req.method !== 'GET' ||
+      req.path.startsWith('/api') ||
+      req.path.startsWith('/uploads')
+    ) {
+      return next();
     }
+
+    res.sendFile(path.join(frontendPath, 'index.html'), (err) => {
+      if (err) {
+        next(err);
+      }
+    });
   });
-});
+} else {
+  // Fallback for when frontend is deployed separately
+  app.get('/', (req, res) => {
+    res.send('Backend API is running. Please use the frontend URL to access the application.');
+  });
+}
 
 // Render provides the PORT environment variable
 const PORT = process.env.PORT || 10000;
