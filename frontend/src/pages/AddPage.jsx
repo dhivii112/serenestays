@@ -14,7 +14,7 @@ export default function AddPage() {
 
   useEffect(() => {
     if (isEdit) {
-      axios.get(`http://localhost:5000/api/hotels/${id}`).then(res => {
+      axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/hotels'}/${id}`).then(res => {
         setForm(res.data);
       });
     }
@@ -27,7 +27,7 @@ export default function AddPage() {
     const fd = new FormData();
     fd.append('image', file);
     try {
-      const res = await axios.post('http://localhost:5000/api/hotels/upload', fd);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/hotels'}/upload`, fd);
       setForm({...form, image_path: res.data.imageUrl });
     } catch { alert('Upload failed da'); }
     setUploading(false);
@@ -43,10 +43,10 @@ export default function AddPage() {
     };
     try {
       if (isEdit) {
-        await axios.put(`http://localhost:5000/api/hotels/${id}`, payload);
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/hotels'}/${id}`, payload);
         alert('Madurai Temple View Updated da! ✅');
       } else {
-        await axios.post('http://localhost:5000/api/hotels', payload);
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/hotels'}`, payload);
         alert('Added da!');
       }
       navigate('/');
