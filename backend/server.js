@@ -14,7 +14,7 @@ app.use('/api/hotels', hotelRoutes);
 
 const frontendPath = path.join(__dirname, '../frontend/dist');
 app.use(express.static(frontendPath));
-app.get('/*splat', (req, res) => {
+app.get('/_', (req, res) => {
   res.sendFile(path.join(frontendPath, 'index.html'));
 });
 
