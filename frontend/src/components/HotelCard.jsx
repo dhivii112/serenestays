@@ -12,7 +12,8 @@ const FALLBACK = [
 export default function HotelCard({ hotel, onDelete }) {
   const validImg = hotel.image_path && (hotel.image_path.startsWith('http') || hotel.image_path.includes('uploads'));
   const fallbackImg = FALLBACK[hotel.id % FALLBACK.length];
-  const imageUrl = validImg ? hotel.image_path : fallbackImg;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+  const imageUrl = validImg ? (hotel.image_path.startsWith('http') ? hotel.image_path : `${backendUrl}${hotel.image_path}`) : fallbackImg;
 
   const handleDelete = async (e) => {
     e.preventDefault();

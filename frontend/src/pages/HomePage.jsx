@@ -10,7 +10,7 @@ export default function HomePage() {
   const perPage = 6;
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/hotels').then(res => setHotels(res.data));
+    axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api/hotels'}`).then(res => setHotels(res.data));
     document.title = "SereneStays - Luxury Stays";
   }, []);
 

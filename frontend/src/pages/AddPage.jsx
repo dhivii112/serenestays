@@ -71,7 +71,7 @@ export default function AddPage() {
           <p className="font-bold text-sm">📸 Hotel Image</p>
           <input type="file" accept="image/*" onChange={handleImageUpload} className="mt-2 w-full text-sm" />
           {uploading && <p className="text-xs text-orange-500">Uploading da...</p>}
-          {form.image_path && <img src={form.image_path} alt="preview" className="w-full h-[150px] object-cover rounded-xl mt-3" />}
+          {form.image_path && <img src={form.image_path.startsWith('http') ? form.image_path : `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}${form.image_path}`} alt="preview" className="w-full h-[150px] object-cover rounded-xl mt-3" />}
         </div>
 
         {/* ITHU THAN DA SAVE CHANGES BUTTON */}
